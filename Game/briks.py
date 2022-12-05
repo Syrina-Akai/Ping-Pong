@@ -83,11 +83,14 @@ class BriksGame:
     def drawBall(self, pos, color):
         b, a = pos
         r = 20
-        R = np.asarray([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
+        R = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
+        R1 = np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
         epsilon = np.sqrt(r)
-        EPSILON = np.sqrt(R)
+        EPSILON = np.sqrt(R1)
         for y in range(self.h):
-            for x in range(self.w):
+            for x, r in zip(range(self.w),R) :
+                
+                print(abs((x-a)**2 + (y-b)**2 - r**2))
                 if (abs((x-a)**2 + (y-b)**2 - r**2) <= EPSILON.any()) :
                     self.img[y, x] = color
         

@@ -8,26 +8,35 @@ lower_blue = np.array([141,155,84])
 upper_blue = np.array([179, 255, 255])
     
 image = cv2.imread('white_image.jpeg') # it's gonna be use for the secondary interface
+print(image.shape)
 radius = 20  # radius of the circle
 thickness = 15 # thickness of the circle
 
 
 while(1):
 
-    # Take each frame
+    # Take each frame 
     _, frame = cap.read()
 
     # Convert BGR to HSV
     hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
 
+   
     # Threshold the HSV image to get only blue colors
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
-
-    # Bitwise-AND mask and original image
+    """      res = np.zeros(hsv.shape, hsv.dtype)
+        w, h, z = hsv.shape
+        for i in range(w) :
+            for j in range(h):
+                if hsv[i][j] not in mask[i]:
+                    res[i][j] = 0
+                else:
+                    res[i][j] = 255"""
+    #Bitwise-AND mask and original image
     res = cv2.bitwise_and(frame,frame, mask= mask)
 
 
-    # find the position of the red object
+    # find the position of the red object   
     w, h, z = res.shape
     positions = []
     for i in range(w):
