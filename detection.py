@@ -27,6 +27,8 @@ while(1):
     cv2.imshow('mask',mask)
     cv2.imshow('res',res)
     
+
+    
     points = cv2.findNonZero(mask)
     print("points : ", points)
     #print("type est : ", type(points))
