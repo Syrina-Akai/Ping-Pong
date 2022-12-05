@@ -3,15 +3,14 @@ import numpy as np
 
 cap = cv2.VideoCapture(0)
 
-# define range of blue color in HSV
+# define range of blue color in HSV (this is for the mask)
 lower_blue = np.array([141,155,84])
 upper_blue = np.array([179, 255, 255])
     
-image = cv2.imread('white_image.jpeg')
-radius = 20
-thickness = 15
-x=0
-y=400
+image = cv2.imread('white_image.jpeg') # it's gonna be use for the secondary interface
+radius = 20  # radius of the circle
+thickness = 15 # thickness of the circle
+
 
 while(1):
 
@@ -28,6 +27,7 @@ while(1):
     res = cv2.bitwise_and(frame,frame, mask= mask)
 
 
+    # find the position of the red object
     w, h, z = res.shape
     positions = []
     for i in range(w):
@@ -35,6 +35,7 @@ while(1):
             if mask[i][j] == 255:
                 positions.append((i,j))
     
+    # we calculate the mean of the positions
     somme_o=0
     somme_1=0
 
@@ -47,6 +48,7 @@ while(1):
         mean_position = (somme_o//len(positions),somme_1//len(positions))
     else: mean_position=(image.shape[0] // 2, image.shape[1] // 2)
 
+    # we draw the circle in the secondary interface
     image = cv2.imread('white_image.jpeg')
     cv2.circle(image, (mean_position[0], image.shape[1] // 2), radius, (0, 0, 255), thickness = 15)
     cv2.imshow('image', image)
