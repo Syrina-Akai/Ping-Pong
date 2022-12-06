@@ -60,7 +60,7 @@ class BriksGame:
                 print("9asseha!!!!!!!")
                 self.direction = random.choice(self.move_up)
                 
-            elif new_y >=(self.h - self.r//2) or new_y <=self.r//2 or new_x >=self.w-(self.r//2) or new_x <=self.r//2:
+            elif new_y >=(self.h - self.r//2 + 1) or new_y <=self.r//2+ 1 or new_x >=self.w-(self.r//2 + 1) or new_x <=self.r//2+ 1:
                 #on ajoute ici la suppression des briques !
                 self.direction = random.choice(self.move_down)
             
@@ -72,7 +72,6 @@ class BriksGame:
             self.direction = random.choice([self.move_map.values])
         elif new_x+self.r*2 >= self.h : 
             self.end_game()
-
             
         delta = self.move_map[self.direction]
         new_y, new_x = self.ball[0]+delta[0], self.ball[1]+delta[1]
@@ -91,6 +90,7 @@ class BriksGame:
     def play(self):
         UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 2490368, 2424832, 2621440, 2555904
         while(1):
+            self.__init__()
             while not self.game_over :
                 cv2.imshow('Break briks', self.img)
                 self.move_ball()
@@ -107,12 +107,13 @@ class BriksGame:
                     self.racket.direction = 'right'
                 if self.racket.direction != '':
                     self.racket.move_racket()
-            choice = chr(k& 0xFF)
+            choice = ''
             while choice not in ['y', 'n']:
                 cv2.imshow('Break briks', self.img)
                 choice = chr(cv2.waitKey(0) & 0xFF)
             if choice == 'n':
                 break
+            
 
         cv2.destroyAllWindows()
 
