@@ -10,6 +10,8 @@ class BriksGame:
         self.game_speed = game_speed
         self.h = 600
         self.w = 810
+        self.cell_h = 30
+        self.cell_w = 150
 
         #colors
         self.grid_color = (1., 1., 1.)
@@ -37,12 +39,12 @@ class BriksGame:
             'down-right' : (self.r//2, self.r//2),
             'down-left' : (-self.r//2, self.r//2)
         })
-        self.direction = 'up-left'
+        self.direction = 'up-right'
         self.move_up = ['up-right', 'up-left']
         self.move_down = ['down-right', 'down-left']
 
         self.game_over = False
-    
+
     def draw_ball(self, pos, color):
         cv2.circle(self.img, pos, 2, color, self.r)
 
@@ -51,26 +53,31 @@ class BriksGame:
         new_y, new_x = self.ball[0]+delta[0], self.ball[1]+delta[1]
 
         
-        if new_y+self.r*2 < self.h and new_x<self.w :
+        if new_y < self.h and new_x < self.w:
             print("y : ",new_y," x : ", new_x)
             print( self.img[new_y, new_x])
-            print("y : ",new_y+self.r*2," x : ", new_x, self.img[new_y+self.r*2, new_x])
-
-            if (self.img[new_y+self.r*2, new_x] == self.racket_color).all():
-                print("9asseha!!!!!!!")
-                self.direction = random.choice(self.move_up)
-                
-            elif new_y >=(self.h - self.r//2 + 1) or new_y <=self.r//2+ 1 or new_x >=self.w-(self.r//2 + 1) or new_x <=self.r//2+ 1:
-                #on ajoute ici la suppression des briques !
-                self.direction = random.choice(self.move_down)
+            
+            if new_y+self.r*2+1 < self.h or new_y+self.r*2+1 < self.w:
+                print("y : ",new_y+self.r*2+1," x : ", new_x, " color => ", self.img[new_x, new_y+self.r*2+1])
+                if (self.img[new_x, new_y+self.r*2+1] == self.racket_color).all() or (self.img[new_x, new_y-(self.r*2+1)] == self.racket_color).all():
+                    print("9asseha!!!!!!!")
+                    self.direction = random.choice(self.move_up)
+                    
+                elif new_y >=(self.h - np.sqrt(self.r)) or new_y <=0 or new_x >=(self.w-np.sqrt(self.r)) or new_x <=0:
+                    #on ajoute ici la suppression des briques !
+                    print("************************************************************************")
+                    print("we're going down y : ",new_y," x : ", new_x)
+                    self.direction = random.choice(self.move_down)
             
         elif new_y >= self.h : 
+            print("new_y >= self.h", new_y)
             self.direction = random.choice(self.move_down) 
         elif new_y <=0 : 
+            print("new_y <=0")
             self.direction = random.choice(self.move_up)
         elif new_x >= self.w or new_x <=0:
             self.direction = random.choice([self.move_map.values])
-        elif new_x+self.r*2 >= self.h : 
+        elif new_y+self.r*2 >= self.w : 
             self.end_game()
             
         delta = self.move_map[self.direction]
