@@ -39,8 +39,7 @@ class BriksGame:
         self.buildBriks()
 
         #position + creation de la ball 
-        self.ball_position = (self.h//2, self.w//2)
-        self.drawBall(self.ball_position, self.ball_color)
+        self.drawBall( self.ball_color)
         
         #map pour sauvegarder les mouvements
         self.move_map = defaultdict(lambda: (0, 0))
@@ -80,22 +79,19 @@ class BriksGame:
             brik_y = brik_y + self.space
 
     #creation de la ball
-    def drawBall(self, pos, color):
-        b, a = pos
+    def drawBall(self,  color):
         r = 20
-        R = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
-        R1 = np.array([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20])
-        epsilon = np.sqrt(r)
-        EPSILON = np.sqrt(R1)
-        for y in range(self.h):
-            for x, r in zip(range(self.w),R) :
-                
-                print(abs((x-a)**2 + (y-b)**2 - r**2))
-                if (abs((x-a)**2 + (y-b)**2 - r**2) <= EPSILON.any()) :
-                    self.img[y, x] = color
+        self.ball_position = ((self.h-r)//2, (self.w-r)//2)
+        y, x = self.ball_position
+        
+        cv2.circle(self.img, (y, x), 2, color, r)
+
+    def move_ball(self):
+        
+        pass
         
     #movement => ça bouge pas verticalement pour le moment
-    def move(self):
+    def move_racket(self):
         delta = self.move_map[self.direction]
 
         new_y, new_x = self.racket[0]+delta[0], self.racket[1]+delta[1]
@@ -121,7 +117,7 @@ class BriksGame:
             elif k == RIGHT_KEY :
                 self.direction = 'right'
             if self.direction != '':
-                self.move()
+                self.move_racket()
         cv2.destroyAllWindows()
 
 #main ^^
