@@ -10,6 +10,8 @@ class BriksGame:
         self.game_speed = game_speed
         self.h = 600
         self.w = 810
+        self.cell_h = 30
+        self.cell_w = 150
 
         #colors
         self.grid_color = (1., 1., 1.)
@@ -37,41 +39,58 @@ class BriksGame:
             'down-right' : (self.r//2, self.r//2),
             'down-left' : (-self.r//2, self.r//2)
         })
-        self.direction = 'up-left'
+        self.direction = 'down-right'
         self.move_up = ['up-right', 'up-left']
         self.move_down = ['down-right', 'down-left']
+        self.move_right = ['up-right', 'down-right']
+        self.move_left = ['up-left', 'down-left']
 
         self.game_over = False
-    
+
     def draw_ball(self, pos, color):
         cv2.circle(self.img, pos, 2, color, self.r)
 
     def move_ball(self):
         delta = self.move_map[self.direction]
         new_y, new_x = self.ball[0]+delta[0], self.ball[1]+delta[1]
-
-        
-        if new_y+self.r*2 < self.h and new_x<self.w :
+        print("*************y : ",new_y," x : ", new_x,"*************")
+        #cela veut dire que la balle est en milieux  : 
+        if new_y < self.h and new_y>0 and new_x>0 and new_x < self.h:
             print("y : ",new_y," x : ", new_x)
             print( self.img[new_y, new_x])
-            print("y : ",new_y+self.r*2," x : ", new_x, self.img[new_y+self.r*2, new_x])
 
-            if (self.img[new_y+self.r*2, new_x] == self.racket_color).all():
-                print("9asseha!!!!!!!")
-                self.direction = random.choice(self.move_up)
-                
-            elif new_y >=(self.h - self.r//2 + 1) or new_y <=self.r//2+ 1 or new_x >=self.w-(self.r//2 + 1) or new_x <=self.r//2+ 1:
-                #on ajoute ici la suppression des briques !
-                self.direction = random.choice(self.move_down)
-            
-        elif new_y >= self.h : 
-            self.direction = random.choice(self.move_down) 
-        elif new_y <=0 : 
-            self.direction = random.choice(self.move_up)
-        elif new_x >= self.w or new_x <=0:
-            self.direction = random.choice([self.move_map.values])
-        elif new_x+self.r*2 >= self.h : 
+            #la balle est en bas :
+            if new_x+self.r//2 < self.h and new_y <self.h : 
+                print("y : ",new_y," x : ", new_x+self.r//2)
+                #si la balle a touche la raquette
+                if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() :
+                    print("***on a touche la raquette***")
+                    self.direction = random.choice(self.move_up)
+                #si la balle est en haut
+                elif new_x <= self.r :
+                    print("we're going down y : ",new_y," x : ", new_x)
+                    self.direction = random.choice(self.move_down)
+        
+        #game over
+        elif new_x>=self.h:
+            print("end game...")
             self.end_game()
+        #si la balle est à gauche => y <0
+        elif new_y-2*np.sqrt(self.r) <=np.sqrt(self.r) :
+            self.direction = random.choice(self.move_right)
+        #si la balle est à droite
+        elif new_y >self.w- self.r*2:
+            print("we're going right : ", new_x)
+            self.direction = random.choice(self.move_left)
+        #les failles => cas specials
+        elif new_y >= self.h :
+            if new_x <= self.r :
+                print("we're going down y : ",new_y," x : ", new_x)
+                self.direction = random.choice(self.move_down)
+            elif new_x+self.r//2 < self.w : 
+                if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() :
+                    print("***on a touche la raquette***")
+                    self.direction = random.choice(self.move_up)
             
         delta = self.move_map[self.direction]
         new_y, new_x = self.ball[0]+delta[0], self.ball[1]+delta[1]
