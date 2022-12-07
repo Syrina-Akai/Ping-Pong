@@ -1,3 +1,4 @@
+import platform
 import cv2
 import numpy as np
 from collections import defaultdict
@@ -107,7 +108,10 @@ class BriksGame:
         
     #le jeu !
     def play(self):
-        UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 2490368, 2424832, 2621440, 2555904
+        if platform.system() == 'Windows':
+            UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 2490368, 2424832, 2621440, 2555904
+        elif platform.system() == 'Linux':
+            UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 65362, 65361, 65364, 65363
         while(1):
             self.__init__()
             while not self.game_over :
@@ -138,5 +142,6 @@ class BriksGame:
 
 
 #let's play ! ^^
+
 briksGame = BriksGame()
 briksGame.play()
