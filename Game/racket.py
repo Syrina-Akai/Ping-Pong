@@ -1,5 +1,3 @@
-import cv2
-import numpy as np
 from collections import defaultdict
 
 class Racket:
@@ -46,4 +44,11 @@ class Racket:
             self.color_square((self.racket[0], new_x), self.racket_color)
             self.racket = (self.racket[0], new_x)
         self.direction = ''
+
+    def move_racket_with_camera(self, x, y):
+        new_y, new_x =  y,  x
+        if new_y <(self.h - self.cell_h) and new_y >self.cell_h and  new_x <self.w-self.cell_w*9//10 and new_x >=0:
+            self.color_square(self.racket, self.grid_color)
+            self.color_square((self.racket[0], new_x), self.racket_color)
+            self.racket = (self.racket[0], new_x)
 

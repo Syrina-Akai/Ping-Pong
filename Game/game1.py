@@ -1,8 +1,8 @@
 import platform
 import cv2
 import numpy as np
-from collections import defaultdict
 from racket import Racket 
+from ball import Ball
 import random
 
 class BriksGame:
@@ -28,23 +28,7 @@ class BriksGame:
         self.racket = Racket(self.img, self.h, self.w)
 
         #create ball
-        self.r = 20
-        self.initial_position = ((self.h-self.r)//2, (self.w-self.r)//2)
-        self.ball = ((self.h-self.r)//2, (self.w-self.r)//2)
-        self.draw_ball(self.ball, self.ball_color)
-
-        self.move_map = defaultdict(lambda: (0, 0))
-        self.move_map.update({
-            'up-right' : (self.r//2, -self.r//2),
-            'up-left' : (-self.r//2, -self.r//2),
-            'down-right' : (self.r//2, self.r//2),
-            'down-left' : (-self.r//2, self.r//2)
-        })
-        self.direction = 'down-right'
-        self.move_up = ['up-right', 'up-left']
-        self.move_down = ['down-right', 'down-left']
-        self.move_right = ['up-right', 'down-right']
-        self.move_left = ['up-left', 'down-left']
+        self.ball = Ball(self.img, self.h, self.w)
 
         self.game_over = False
 
@@ -88,7 +72,7 @@ class BriksGame:
             if new_x <= self.r :
                 print("we're going down y : ",new_y," x : ", new_x)
                 self.direction = random.choice(self.move_down)
-            elif new_x+self.r//2 < self.h : 
+            elif new_x+self.r//2 < self.w : 
                 if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() :
                     print("***on a touche la raquette***")
                     self.direction = random.choice(self.move_up)
@@ -116,7 +100,7 @@ class BriksGame:
             self.__init__()
             while not self.game_over :
                 cv2.imshow('Break briks', self.img)
-                self.move_ball()
+                self.ball.move_ball()
                 
                 k = cv2.waitKeyEx(self.game_speed)
                 self.racket.direction = ''
@@ -136,12 +120,9 @@ class BriksGame:
                 choice = chr(cv2.waitKey(0) & 0xFF)
             if choice == 'n':
                 break
-            
-
         cv2.destroyAllWindows()
 
 
 #let's play ! ^^
-
 briksGame = BriksGame()
 briksGame.play()
