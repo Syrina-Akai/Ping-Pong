@@ -30,32 +30,10 @@ with mp_hands.Hands(
       for hand_landmarks in results.multi_hand_landmarks:
         # Here is How to Get All the Coordinates
         cx, cy = hand_landmarks.landmark[10].x * image_width, hand_landmarks.landmark[10].y*image_height
-        print((cx, cy))
-        cv2.circle(image, (abs(int(cx)), abs(int(cy))), 10, (0, 255, 0), 10)
-        """    for ids, landmrk in enumerate(hand_landmarks.landmark):
-                # print(ids, landmrk)
-                cx, cy = landmrk.x * image_width, landmrk.y*image_height
-                print((cx, cy))
-                cv2.circle(image, (abs(int(cx)), abs(int(cy))), 10, (0, 255, 0), 10)
-                cv2.circle(image, (cx, cy), 10, (0, 255, 0), 10)
-                font = cv2.FONT_HERSHEY_SIMPLEX
-                # fontScale
-                fontScale = 0.5
-                # Blue color in BGR
-                color = (255, 0, 0)
-                # Line thickness of 2 px
-                thickness = 2
-                # Using cv2.putText() method
-                image = cv2.putText(image, str((cx, cy)), (cx, cy), font, 
-                            fontScale, color, thickness, cv2.LINE_AA)
-            # print (ids, cx, cy)        
-                mp_drawing.draw_landmarks(
-                image, hand_landmarks, mp_hands.HAND_CONNECTIONS)"""
 
+        cv2.circle(image, (abs(int(cx)), abs(int(cy))), 10, (0, 255, 0), 10)
         # we draw the circle in the secondary interface
         img = cv2.imread('Test1/white_image.jpeg')
-
-    
         cv2.circle(img, (abs(int(cx)), img.shape[1] // 2), radius, (0, 0, 255), thickness = 15)
         cv2.imshow('img', img)
         cv2.waitKey(100)

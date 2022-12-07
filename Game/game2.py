@@ -2,7 +2,7 @@ import platform
 import cv2
 import numpy as np
 from collections import defaultdict
-from racket import Racket 
+from play_with_hand import Racket 
 import random
 
 class BriksGame:
