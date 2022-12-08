@@ -69,7 +69,8 @@ class BriksGame:
 
                             cv2.circle(image, (abs(int(cx)), abs(int(cy))), 10, (0, 255, 0), 10)
                             # we draw the circle in the secondary interface
-                            img = cv2.imread('Game/white_image.jpeg')
+                            img = np.ones((image.shape))
+                            #img = cv2.imread('white_image.jpeg')
                             cv2.circle(img, (abs(int(cx)), img.shape[1] // 2), radius, (0, 0, 255), thickness = 15)
                             cv2.imshow('img', img)
                             cv2.waitKey(5)

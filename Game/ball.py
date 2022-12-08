@@ -32,31 +32,20 @@ class Ball:
 
     def draw_ball(self, pos, color):
         cv2.circle(self.img, pos, 2, color, self.r)
-    
-    def move_random(self, upDown):
-        pass
-            
-            
 
     def move_ball(self):
         delta = self.move_map[self.direction]
         new_y, new_x = self.ball[0]+delta[0], self.ball[1]+delta[1]
-        #print("*************y : ",new_y," x : ", new_x,"*************")
         #cela veut dire que la balle est en milieux  : 
         if new_y < self.h and new_y>0 and new_x>0 and new_x < self.h:
-            """     print("y : ",new_y," x : ", new_x)
-                print( self.img[new_y, new_x])"""
 
             #la balle est en bas :
             if new_x+self.r//2 < self.h and new_y <self.h : 
-                #print("y : ",new_y," x : ", new_x+self.r//2)
                 #si la balle a touche la raquette
                 if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() :
-                    #print("***on a touche la raquette***")
                     self.direction = random.choice(self.move_up)
                 #si la balle est en haut
                 elif new_x <= self.r :
-                    print("we're going down y : ",new_y," x : ", new_x)
                     self.direction = random.choice(self.move_down)
         
         #game over
@@ -68,8 +57,8 @@ class Ball:
             self.direction = random.choice(self.move_right)
         #si la balle est à droite
         elif new_y >self.w- self.r*2:
-            #print("we're going right : ", new_x)
             self.direction = random.choice(self.move_left)
+
         #les failles => cas specials
         elif new_y >= self.h :
             if new_x <= self.r :
