@@ -37,7 +37,6 @@ class BriksGame:
 
     # Detects the color of the object in the frame
     def detect_inrange(self, image, surface):
-
         p = []
         image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # convert to HSV
         image = cv2.blur(image, (5, 5)) # blur the image
@@ -64,7 +63,7 @@ class BriksGame:
         while cap.isOpened():
             self.__init__()
             while not self.ball.game_over :
-                cv2.imshow('Break briks', self.img)
+                cv2.imshow('Bricks Breaker', self.img)
                 self.ball.move_ball()
                 ret, frame = cap.read()
                 if not ret:
@@ -74,14 +73,14 @@ class BriksGame:
                 cv2.flip(frame, 1, frame)
                 image, mask, p = self.detect_inrange(frame, 200)
                 # we draw the circle in the secondary interface
-                img = cv2.imread('Game/white_image.jpeg')
+                img = np.ones((image.shape))
                 if p!=[]:
                     cv2.circle(img, (p[0][0], p[0][1]), radius, (0, 0, 255), thickness = 15)
-                    cv2.imshow('img', img)
+                    cv2.imshow("Color's position", img)
                     cv2.waitKey(5)
                     self.racket.move_racket_with_camera(abs(int(p[0][0])), abs(int(p[0][1])))
                 else:
-                    cv2.imshow('img', img)
+                    cv2.imshow("Color's position", img)
                     cv2.waitKey(5)
 
                 if cv2.waitKey(10)&0xFF == ord('0') :
@@ -89,7 +88,7 @@ class BriksGame:
 
             choice = ''
             while choice not in ['y', 'n']:
-                cv2.imshow('Break briks', self.img)
+                cv2.imshow('Bricks Breaker', self.img)
                 choice = chr(cv2.waitKey(0) & 0xFF)
             if choice == 'n':
                 break

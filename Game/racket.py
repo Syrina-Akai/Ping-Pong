@@ -17,7 +17,7 @@ class Racket:
         #creation de la raquette 
         self.color_square(self.racket, self.racket_color)
         
-        print("y = ", self.initial_pos[0],"-",self.initial_pos[0]+self.cell_h, "x = ", self.initial_pos[1], "-", self.initial_pos[1]+self.cell_w ,self.img[self.initial_pos])
+        
         #map pour sauvegarder les mouvements
         self.move_map = defaultdict(lambda: (0, 0))
         self.move_map.update({
