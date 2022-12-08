@@ -1,5 +1,5 @@
 from collections import defaultdict
-
+import cv2
 class Racket:
     def __init__(self, img, h=600, w=810):
         self.h = h
@@ -51,4 +51,5 @@ class Racket:
             self.color_square(self.racket, self.grid_color)
             self.color_square((self.racket[0], new_x), self.racket_color)
             self.racket = (self.racket[0], new_x)
+            
 

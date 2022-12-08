@@ -73,9 +73,12 @@ class BriksGame:
                             #img = cv2.imread('white_image.jpeg')
                             cv2.circle(img, (abs(int(cx)), img.shape[1] // 2), radius, (0, 0, 255), thickness = 15)
                             cv2.imshow('img', img)
-                            cv2.waitKey(5)
+
+                            #### i added this line to make the game slower
+                            cv2.waitKey(self.game_speed)
+                            
                             self.racket.move_racket_with_camera(abs(int(cx)), abs(int(cy)))
-                    cv2.imshow('MediaPipe Hands', image)
+                    #cv2.imshow('MediaPipe Hands', image)
                     if cv2.waitKey(5) & 0xFF == 27:
                         break
                 choice = ''
