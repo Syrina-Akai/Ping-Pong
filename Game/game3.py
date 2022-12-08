@@ -40,12 +40,12 @@ class BriksGame:
 
         p = []
         image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV) # convert to HSV
-        image = cv2.blur(image, (5, 5)) # blur the image
-        mask = cv2.inRange(image, self.lo, self.hi) # create a mask
-        mask = cv2.erode(mask, None, iterations=2) # remove noise
+        image = cv2.blur(image, (5, 5)) # blur the image to reduce noise
+        mask = cv2.inRange(image, self.lo, self.hi) # create a mask to detect the color
+        mask = cv2.erode(mask, None, iterations=2) # remove noise 
         mask = cv2.dilate(mask, None, iterations=2) # remove noise
-        elems = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2] # find contours
-        elems = sorted(elems, key=lambda x:cv2.contourArea(x), reverse=True) # sort contours
+        elems = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[-2] # find contour to detect the object
+        elems = sorted(elems, key=lambda x:cv2.contourArea(x), reverse=True) # sort contours to
         for elem in elems:
             # if the contour is big enough, draw it on the frame
             if cv2.contourArea(elem) > surface:
