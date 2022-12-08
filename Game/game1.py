@@ -35,11 +35,11 @@ class BriksGame:
         
     #le jeu !
     def play(self):
-        if platform.system() == 'Windows':
-            UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 2490368, 2424832, 2621440, 2555904
-        elif platform.system() == 'Linux':
-            UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 65362, 65361, 65364, 65363
         while(1):
+            if platform.system() == 'Windows':
+                UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 2490368, 2424832, 2621440, 2555904
+            elif platform.system() == 'Linux':
+                UP_KEY, LEFT_KEY, DOWN_KEY, RIGHT_KEY = 65362, 65361, 65364, 65363
             self.__init__()
             while not self.ball.game_over :
                 cv2.imshow('Break briks', self.img)
