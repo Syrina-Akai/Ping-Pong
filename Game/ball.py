@@ -70,6 +70,7 @@ class Ball:
                 if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() :
                     print("***on a touche la raquette***")
                     self.direction = random.choice(self.move_up)
+                    self.score+=1
             
         delta = self.move_map[self.direction]
         new_y, new_x = self.ball[0]+delta[0], self.ball[1]+delta[1]
