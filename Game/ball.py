@@ -29,6 +29,7 @@ class Ball:
         self.move_right = ['up-right', 'down-right']
         self.move_left = ['up-left', 'down-left']
         self.game_over=False
+        self.score = 0
 
     def draw_ball(self, pos, color):
         cv2.circle(self.img, pos, 2, color, self.r)
@@ -44,6 +45,7 @@ class Ball:
                 #si la balle a touche la raquette
                 if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() :
                     self.direction = random.choice(self.move_up)
+                    self.score+=1
                 #si la balle est en haut
                 elif new_x <= self.r :
                     self.direction = random.choice(self.move_down)
@@ -80,4 +82,7 @@ class Ball:
         self.img[self.h//5:self.h*4//6, self.w//5:self.w*4//5] = (0.2, 0.2, 0.2)
         font = cv2.FONT_HERSHEY_SIMPLEX
         cv2.putText(self.img, 'Game over!', (self.w//3, self.h*2//7), font, 1.5, (1., 1., 1.), 4, 2)
+        cv2.putText(self.img, 'Score:', (self.w*7//16, self.h * 3 // 8), font, 1.1, (1., 1., 1.), 1, 2)
+        cv2.putText(self.img, str(self.score), (self.w * 7// 15, self.h * 4//8), font, 2, (1., 1., 1.), 3, 2)
         cv2.putText(self.img, 'Press y to play again or n to quit', (self.w//4, self.h * 5 // 8), font, 0.75, (1., 1., 1.), 1, 2)
+        self.score=0
