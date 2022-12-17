@@ -5,9 +5,8 @@ from ball import Ball
 import mediapipe as mp
 
 class BriksGame:
-    def __init__(self, h=600, w=810, game_speed=50):
+    def __init__(self, h=600, w=810):
         
-        self.game_speed = game_speed
         self.h = 600
         self.w = 810
         self.cell_h = 30
@@ -73,9 +72,6 @@ class BriksGame:
                             #img = cv2.imread('white_image.jpeg')
                             cv2.circle(img, (abs(int(cx)), img.shape[1] // 2), radius, (0, 0, 255), thickness = 15)
                             cv2.imshow('img', img)
-
-                            #### i added this line to make the game slower
-                            cv2.waitKey(self.game_speed)
                             
                             self.racket.move_racket_with_camera(abs(int(cx)), abs(int(cy)))
                     #cv2.imshow('MediaPipe Hands', image)

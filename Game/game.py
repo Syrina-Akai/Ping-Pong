@@ -192,7 +192,6 @@ class BriksGame:
                             cv2.imshow("Finger's position", img)
                             cv2.waitKey(5)
                             self.racket.move_racket_with_camera(abs(int(cx)), abs(int(cy)))
-                    cv2.imshow('MediaPipe Hands', image)
                 if self.ball.game_over:
                     cv2.destroyWindow('MediaPipe Hands')
                     cv2.destroyWindow("Finger's position")

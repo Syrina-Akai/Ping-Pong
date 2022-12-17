@@ -72,6 +72,7 @@ class BriksGame:
                     continue
                 cv2.flip(frame, 1, frame)
                 image, mask, p = self.detect_inrange(frame, 200)
+                cv2.imshow("mask", mask)
                 # we draw the circle in the secondary interface
                 img = np.ones((image.shape))
                 if p!=[]:
