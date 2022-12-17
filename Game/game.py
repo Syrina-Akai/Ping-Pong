@@ -192,8 +192,9 @@ class BriksGame:
                             cv2.imshow("Finger's position", img)
                             cv2.waitKey(5)
                             self.racket.move_racket_with_camera(abs(int(cx)), abs(int(cy)))
+                    if cv2.waitKey(5) & 0xFF == 27:
+                        break
                 if self.ball.game_over:
-                    cv2.destroyWindow('MediaPipe Hands')
                     cv2.destroyWindow("Finger's position")
                     break
             choice = ''
@@ -202,6 +203,7 @@ class BriksGame:
                 choice = chr(cv2.waitKey(0) & 0xFF)
             if choice == 'n':
                 self.break_game = True
+                
 
 
     #le jeu !
