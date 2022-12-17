@@ -75,6 +75,7 @@ class BriksGame:
 
         while not self.ball.game_over :
             cv2.imshow('Bricks Breaker', self.img)
+            
             self.ball.move_ball()
             
             k = cv2.waitKeyEx(self.game_speed)
