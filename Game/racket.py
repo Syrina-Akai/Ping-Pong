@@ -23,8 +23,6 @@ class Racket:
         self.move_map.update({
             'left': (0, -self.cell_h),
             'right': (0, self.cell_h),
-            'up': (-self.cell_h, 0),
-            'down': (self.cell_h, 0)
         })
         self.direction = ''
 
@@ -34,7 +32,7 @@ class Racket:
         self.img[y:y+self.cell_h, x:x+self.cell_w] = color
         self.racket_position = {'y':[y, y+self.cell_h], 'x': [x,x+self.cell_w]}
     
-    #movement => ça bouge pas verticalement pour le moment
+    #movement 
     def move_racket(self):
         delta = self.move_map[self.direction]
         new_y, new_x = self.racket[0]+delta[0], self.racket[1]+delta[1]

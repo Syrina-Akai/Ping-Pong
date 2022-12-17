@@ -61,14 +61,12 @@ class Ball:
         elif new_y >self.w- self.r*2:
             self.direction = random.choice(self.move_left)
 
-        #les failles => cas specials
+        #cas specials
         elif new_y >= self.h :
             if new_x <= self.r :
-                #print("we're going down y : ",new_y," x : ", new_x)
                 self.direction = random.choice(self.move_down)
             elif new_x+self.r//2 < self.h : 
-                if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() :
-                    print("***on a touche la raquette***")
+                if (self.img[new_x+self.r//2, new_y] == self.racket_color).all() : #on touche la raquette
                     self.direction = random.choice(self.move_up)
                     self.score+=1
             

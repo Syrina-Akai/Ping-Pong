@@ -203,8 +203,6 @@ class BriksGame:
                 choice = chr(cv2.waitKey(0) & 0xFF)
             if choice == 'n':
                 self.break_game = True
-                
-
 
     #le jeu !
     def play(self):
