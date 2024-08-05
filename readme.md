@@ -1,4 +1,4 @@
-# Projet-vision-2
+# Ping Pong
 ### How to run the project
 ### Linux User
 
